@@ -1,8 +1,7 @@
+import 'package:ezy_pod/src/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:ezy_pod/src/features/auth/domain/repositories/auth_repository.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 
-import '../../data/repositories/auth_repository_impl.dart';
+import 'package:flutter/foundation.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final AuthRepository _authRepository = AuthRepositoryImpl();
