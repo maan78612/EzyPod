@@ -29,60 +29,65 @@ class LoginScreen extends ConsumerWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: hMargin),
-            child: Form(
-              key: loginViewModel.loginFormKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    AppImages.logo,
-                    width: 180.w,
-                  ),
-                  35.verticalSpace,
-                  Text(
-                    "Welcome",
-                    style: InterStyles.semiBold
-                        .copyWith(fontSize: 24.sp, color: AppColors.blackColor),
-                  ),
-                  21.verticalSpace,
-                  Text(
-                    "Please enter your details below to login",
-                    style: InterStyles.regular,
-                  ),
-                  35.verticalSpace,
-                  CustomInputField(
-                    title: "User ID",
-                    hint: "Enter user ID",
-                    controller: loginViewModel.emailCon,
-                    validator: TextFieldValidator.validateField,
-                    onChange: (value) => loginViewModel.setEnableBtn(),
-                  ),
-                  21.verticalSpace,
-                  CustomInputField(
-                    title: "Password",
-                    hint: "Enter password",
-                    controller: loginViewModel.passwordCon,
-                    onChange: (value) => loginViewModel.setEnableBtn(),
-                    validator: TextFieldValidator.validatePassword,
-                    obscure: true,
-                  ),
-                  21.verticalSpace,
-                  CustomButton(
-                    title: 'Login',
-                    isEnable: loginViewModel.isBtnEnable,
-                    bgColor: AppColors.primaryColor,
-                    onPressed: () {
-                      loginViewModel.login();
-                    },
-                  ),
-                  30.verticalSpace,
-                  CustomInputField(
-                    title: "Tenant URL",
-                    hint: "Enter tenant url",
-                    controller: loginViewModel.tenantCon,
-                  ),
-                ],
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  AppImages.logo,
+                  width: 180.w,
+                ),
+                35.verticalSpace,
+                Text(
+                  "Welcome",
+                  style: InterStyles.semiBold
+                      .copyWith(fontSize: 24.sp, color: AppColors.blackColor),
+                ),
+                21.verticalSpace,
+                Text(
+                  "Please enter your details below to login",
+                  style: InterStyles.regular,
+                ),
+                35.verticalSpace,
+                CustomInputField(
+                  title: "User ID",
+                  hint: "Enter user ID",
+                  controller: loginViewModel.uIdCon,
+                  onChange: (value) {
+                    loginViewModel.onChange(
+                        con: loginViewModel.uIdCon,
+                        value: value,
+                        validator: TextFieldValidator.validateUid);
+                  },
+                ),
+                21.verticalSpace,
+                CustomInputField(
+                  title: "Password",
+                  hint: "Enter password",
+                  controller: loginViewModel.passwordCon,
+                  onChange: (value) {
+                    loginViewModel.onChange(
+                        con: loginViewModel.passwordCon,
+                        value: value,
+                        validator: TextFieldValidator.validatePassword);
+                  },
+                  obscure: true,
+                ),
+                21.verticalSpace,
+                CustomButton(
+                  title: 'Login',
+                  isEnable: loginViewModel.isBtnEnable,
+                  bgColor: AppColors.primaryColor,
+                  onPressed: () {
+                    loginViewModel.login();
+                  },
+                ),
+                30.verticalSpace,
+                CustomInputField(
+                  title: "Tenant URL",
+                  hint: "Enter tenant url",
+                  controller: loginViewModel.tenantCon,
+                ),
+              ],
             ),
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:ezy_pod/src/core/commons/custom_inkwell.dart';
+import 'package:ezy_pod/src/core/commons/custom_text_controller.dart';
 import 'package:ezy_pod/src/core/constants/colors.dart';
 import 'package:ezy_pod/src/core/constants/fonts.dart';
 import 'package:ezy_pod/src/core/constants/globals.dart';
@@ -10,7 +11,7 @@ class CustomInputField extends StatefulWidget {
   final String? hint;
   final String? title;
   final Widget? prefixWidget;
-  final TextEditingController? controller;
+  final CustomTextController controller;
   final TextInputType? keyboardType;
   final bool? obscure;
   final bool expand;
@@ -20,7 +21,6 @@ class CustomInputField extends StatefulWidget {
   final FocusNode? focusNode;
   final Function(String)? onChange;
   final Function()? onEditingComplete;
-  final String? Function(String?)? validator;
   final bool? verticalAlign;
   final bool? isDecorationEnable;
   final bool autoFocus;
@@ -47,7 +47,7 @@ class CustomInputField extends StatefulWidget {
       this.expand = true,
       this.prefixWidget,
       this.hint,
-      this.controller,
+      required this.controller,
       this.keyboardType = TextInputType.visiblePassword,
       this.obscure = false,
       this.autoFocus = false,
@@ -61,7 +61,6 @@ class CustomInputField extends StatefulWidget {
       this.onTap,
       this.borderRadius = 5,
       this.suffixWidget,
-      this.validator,
       this.maxLength,
       this.contentPadding,
       this.onSubmit,
@@ -77,7 +76,6 @@ class CustomInputField extends StatefulWidget {
 
 class _AuthInputFieldState extends State<CustomInputField> {
   late bool obscure;
-  String? errorMsg;
 
   @override
   void initState() {
@@ -106,15 +104,10 @@ class _AuthInputFieldState extends State<CustomInputField> {
           maxLines: 1,
           minLines: 1,
           cursorHeight: 16.sp,
-          onChanged: (val) {
-            errorMsg = widget.validator!(val);
-            if (errorMsg == null) {
-              widget.onChange!(val);
-            }
-          },
+          onChanged: widget.onChange,
           onEditingComplete: widget.onEditingComplete,
           enabled: widget.enable,
-          controller: widget.controller,
+          controller: widget.controller.controller,
           textAlign: widget.textAlignCenter == true
               ? TextAlign.center
               : TextAlign.start,
@@ -188,7 +181,7 @@ class _AuthInputFieldState extends State<CustomInputField> {
         ),
         4.verticalSpace,
         Text(
-          errorMsg ?? "",
+          widget.controller.error ?? "",
           style: InterStyles.regular
               .copyWith(fontSize: 10.sp, color: AppColors.redColor),
         )

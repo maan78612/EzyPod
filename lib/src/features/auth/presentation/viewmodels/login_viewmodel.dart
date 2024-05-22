@@ -1,7 +1,8 @@
-import 'package:ezy_pod/src/core/constants/globals.dart';
+import 'package:ezy_pod/src/core/commons/custom_navigation.dart';
+import 'package:ezy_pod/src/core/commons/custom_text_controller.dart';
 import 'package:ezy_pod/src/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:ezy_pod/src/features/auth/domain/repositories/auth_repository.dart';
-import 'package:flutter/foundation.dart';
+import 'package:ezy_pod/src/features/home/presentation/views/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,11 +12,13 @@ class LoginViewModel with ChangeNotifier {
   LoginViewModel(this._ref);
 
   final AuthRepository _authRepository = AuthRepositoryImpl();
-  TextEditingController emailCon = TextEditingController();
-  TextEditingController passwordCon = TextEditingController();
-  TextEditingController tenantCon = TextEditingController();
 
-  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  CustomTextController uIdCon = CustomTextController(
+      controller: TextEditingController(), focusNode: FocusNode());
+  CustomTextController passwordCon = CustomTextController(
+      controller: TextEditingController(), focusNode: FocusNode());
+  CustomTextController tenantCon = CustomTextController(
+      controller: TextEditingController(), focusNode: FocusNode());
 
   bool _isLoading = false;
   bool _isBtnEnable = false;
@@ -29,9 +32,24 @@ class LoginViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  void onChange(
+      {required CustomTextController con,
+      String? Function(String?)? validator,
+      required String value}) {
+    if (validator != null) {
+      con.error = validator(value);
+    }
+    setEnableBtn();
+  }
+
   void setEnableBtn() {
-    if (emailCon.text.isNotEmpty && passwordCon.text.isNotEmpty) {
-      _isBtnEnable = true;
+    if (uIdCon.controller.text.isNotEmpty &&
+        passwordCon.controller.text.isNotEmpty) {
+      if (uIdCon.error == null && passwordCon.error == null) {
+        _isBtnEnable = true;
+      } else {
+        _isBtnEnable = false;
+      }
     } else {
       _isBtnEnable = false;
     }
@@ -40,19 +58,21 @@ class LoginViewModel with ChangeNotifier {
   }
 
   Future<void> login() async {
-    if (loginFormKey.currentState!.validate()) {
-      setLoading = true;
-      try {
-        final user = await _authRepository.login(username: '', password: '');
-        _ref.read(userProvider.notifier).update((state) => user);
-      } catch (e) {
-        // Handle login error
-        if (kDebugMode) {
-          print('Login error: $e');
-        }
-      } finally {
-        setLoading = false;
-      }
-    }
+    CustomNavigation().pushAndRemoveUntil(HomeScreen());
+
+    /// temporarily comment below code waiting for apis
+    // setLoading = true;
+    // try {
+    //
+    //   final user = await _authRepository.login(username: '', password: '');
+    //   _ref.read(userProvider.notifier).update((state) => user);
+    // } catch (e) {
+    //   // Handle login error
+    //   if (kDebugMode) {
+    //     print('Login error: $e');
+    //   }
+    // } finally {
+    //   setLoading = false;
+    // }
   }
 }

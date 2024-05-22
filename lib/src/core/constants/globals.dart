@@ -5,4 +5,4 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 final userProvider = StateProvider<User?>((ref) => null);
 const int routingDuration = 300;
 double inputFieldHeight = 44.sp;
-double hMargin = 34.sp;
+double hMargin = 30.sp;

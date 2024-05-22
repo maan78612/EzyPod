@@ -1,4 +1,5 @@
 import 'package:ezy_pod/src/core/commons/custom_navigation.dart';
+import 'package:ezy_pod/src/core/constants/colors.dart';
 import 'package:ezy_pod/src/core/constants/images.dart';
 import 'package:ezy_pod/src/features/auth/presentation/views/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,12 +27,13 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
       body: Center(
         child: ScaleTransition(
           scale: _animation,
           child: SvgPicture.asset(
             AppImages.logo,
-            width: 200.w,
+            width: 250.w,
           ),
         ),
       ),

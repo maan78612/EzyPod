@@ -30,6 +30,13 @@ class CustomNavigation {
     );
   }
 
+  void pushAndRemoveUntil(Widget page) {
+    Navigator.of(_navigatorKey.currentContext!).pushAndRemoveUntil(
+      RoutingAnimation(child: page),
+      (Route<dynamic> route) => false,
+    );
+  }
+
   void pop<T extends Object>([T? result]) {
     Navigator.of(_navigatorKey.currentContext!).pop<T>(result);
   }

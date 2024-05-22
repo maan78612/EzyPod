@@ -8,6 +8,16 @@ class TextFieldValidator {
     return null;
   }
 
+  static String? validateUid(String? value) {
+    if (value!.isEmpty) {
+      return "Required field is empty";
+    }
+    if (!RegExp(r"\d").hasMatch(value)) {
+      return "Uid must have 1 number";
+    }
+    return null;
+  }
+
   static String? validateEmail(String? value) {
     if (value!.isEmpty) {
       return "Email is Required";
