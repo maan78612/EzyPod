@@ -1,1 +1,0 @@
-const int routingDuration = 300;

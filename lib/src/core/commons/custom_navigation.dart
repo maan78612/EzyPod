@@ -1,4 +1,4 @@
-import 'package:ezy_pod/src/core/constants/constants.dart';
+import 'package:ezy_pod/src/core/constants/globals.dart';
 import 'package:flutter/material.dart';
 
 class CustomNavigation {
@@ -17,7 +17,6 @@ class CustomNavigation {
   void push(Widget page) {
     Navigator.of(_navigatorKey.currentContext!).push(
       RoutingAnimation(
-        direction: AxisDirection.left,
         child: page,
       ),
     );
@@ -26,7 +25,6 @@ class CustomNavigation {
   void pushReplacement(Widget page) {
     Navigator.of(_navigatorKey.currentContext!).pushReplacement(
       RoutingAnimation(
-        direction: AxisDirection.left,
         child: page,
       ),
     );

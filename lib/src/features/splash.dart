@@ -1,8 +1,13 @@
 import 'package:ezy_pod/src/core/commons/custom_navigation.dart';
+import 'package:ezy_pod/src/core/constants/images.dart';
 import 'package:ezy_pod/src/features/auth/presentation/views/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -24,7 +29,10 @@ class _SplashScreenState extends State<SplashScreen>
       body: Center(
         child: ScaleTransition(
           scale: _animation,
-          child: Image.asset('your_logo.png'),
+          child: SvgPicture.asset(
+            AppImages.logo,
+            width: 200.w,
+          ),
         ),
       ),
     );

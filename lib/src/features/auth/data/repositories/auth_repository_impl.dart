@@ -1,3 +1,4 @@
+import 'package:ezy_pod/src/core/services/network/api_data_source.dart';
 import 'package:ezy_pod/src/features/auth/domain/models/user.dart';
 import 'package:ezy_pod/src/features/auth/domain/repositories/auth_repository.dart';
 
@@ -10,9 +11,14 @@ class AuthRepositoryImpl implements AuthRepository {
       );
 
   @override
-  Future<User> login({required String username, required String password}) async {
-    User user = User();
-    return user;
+  Future<User> login(
+      {required String username, required String password}) async {
+    try {
+      var value = await NetworkApi.instance.get(url: "");
+      return User.fromJson(value);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
