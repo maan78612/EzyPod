@@ -3,20 +3,21 @@ import 'package:ezy_pod/src/core/commons/custom_inkwell.dart';
 import 'package:ezy_pod/src/core/commons/custom_navigation.dart';
 import 'package:ezy_pod/src/core/constants/colors.dart';
 import 'package:ezy_pod/src/core/constants/fonts.dart';
-import 'package:ezy_pod/src/features/deliveries/presentation/viewmodels/delivery_viewmodel.dart';
+import 'package:ezy_pod/src/features/deliveries/presentation/viewmodels/delivery_form_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:signature/signature.dart';
 
 class SignaturePad extends ConsumerWidget {
-  final ChangeNotifierProvider<DeliveryViewModel> deliveryViewModelProvider;
+  final ChangeNotifierProvider<DeliveryFormViewModel>
+      deliveryFormViewModelProvider;
 
-   const SignaturePad({super.key, required this.deliveryViewModelProvider});
+  const SignaturePad({super.key, required this.deliveryFormViewModelProvider});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-   final deliveryViewModel= ref.watch(deliveryViewModelProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final deliveryViewModel = ref.watch(deliveryFormViewModelProvider);
     return Stack(
       alignment: Alignment.bottomRight,
       children: [
@@ -38,35 +39,7 @@ class SignaturePad extends ConsumerWidget {
         ),
         CommonInkWell(
           onTap: () async {
-            deliveryViewModel.clearSignaturePad();
-            return await showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Dialog(
-                  insetPadding: EdgeInsets.all(24.sp),
-                  backgroundColor: AppColors.primaryColor.withOpacity(0.8),
-                  surfaceTintColor: Colors.transparent,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0.sp),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        10.verticalSpace,
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Signature(
-                            controller: deliveryViewModel.signatureController,
-                            height: 300,
-                            backgroundColor: Colors.white,
-                          ),
-                        ),
-                        dialogButtons(deliveryViewModel),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
+            onUploadClick(deliveryViewModel, context);
           },
           child: Container(
             padding: EdgeInsets.all(8.0.sp),
@@ -85,7 +58,42 @@ class SignaturePad extends ConsumerWidget {
     );
   }
 
-  Widget dialogButtons(DeliveryViewModel deliveryViewModel) {
+  void onUploadClick(
+    DeliveryFormViewModel deliveryViewModel,
+    BuildContext context,
+  ) async {
+    deliveryViewModel.clearSignaturePad();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          insetPadding: EdgeInsets.all(24.sp),
+          backgroundColor: AppColors.primaryColor.withOpacity(0.8),
+          surfaceTintColor: Colors.transparent,
+          child: Padding(
+            padding: EdgeInsets.all(8.0.sp),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                10.verticalSpace,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0.r),
+                  child: Signature(
+                    controller: deliveryViewModel.signatureController,
+                    height: 300,
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+                dialogButtons(deliveryViewModel),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget dialogButtons(DeliveryFormViewModel deliveryFormViewModel) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 32.sp),
       child: Row(
@@ -104,7 +112,7 @@ class SignaturePad extends ConsumerWidget {
                 title: "Accept",
                 bgColor: AppColors.greenColor,
                 onPressed: () async {
-                  await deliveryViewModel.saveSignatureValue();
+                  await deliveryFormViewModel.saveSignatureValue();
 
                   CustomNavigation().pop();
                 }),

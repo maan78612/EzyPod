@@ -4,7 +4,7 @@ import 'package:ezy_pod/src/core/constants/colors.dart';
 import 'package:ezy_pod/src/core/constants/fonts.dart';
 import 'package:ezy_pod/src/core/constants/images.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/viewmodels/delivery_viewmodel.dart';
-import 'package:ezy_pod/src/features/deliveries/presentation/views/delivered_form.dart';
+import 'package:ezy_pod/src/features/deliveries/presentation/views/delivery_form/delivered_form.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/widgets/delivery_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,10 +14,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 class PendingDetailScreen extends ConsumerWidget {
   final ChangeNotifierProvider<DeliveryViewModel> deliveryViewModelProvider;
 
-  const PendingDetailScreen({super.key, required this.deliveryViewModelProvider});
+  const PendingDetailScreen(
+      {super.key, required this.deliveryViewModelProvider});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final deliveryViewModel = ref.watch(deliveryViewModelProvider);
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
@@ -66,9 +67,7 @@ class PendingDetailScreen extends ConsumerWidget {
                 title: "Delivered",
                 bgColor: AppColors.primaryColor,
                 onPressed: () {
-                  CustomNavigation().push(DeliveredForm(
-                    deliveryViewModelProvider: deliveryViewModelProvider,
-                  ));
+                  CustomNavigation().push(DeliveredForm());
                 }),
           ),
           34.horizontalSpace,
@@ -94,11 +93,11 @@ class PendingDetailScreen extends ConsumerWidget {
         TextFormField(
           cursorColor: AppColors.primaryColor,
           controller: deliveryViewModel.notes,
-          style: InterStyles.regular
-              .copyWith(color: AppColors.blackColor, fontSize: 16.sp),
+          enabled: false,
+          style: InterStyles.regular.copyWith(fontSize: 14.sp),
           decoration: InputDecoration(
-            hintText: 'Please Enter Note',
-            hintStyle: InterStyles.regular,
+            // hintText: 'Please Enter Note',
+            // hintStyle: InterStyles.regular,
             border: inputBorder,
             enabledBorder: inputBorder,
             errorBorder: inputBorder,

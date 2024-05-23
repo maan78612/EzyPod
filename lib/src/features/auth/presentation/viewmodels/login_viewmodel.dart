@@ -21,10 +21,10 @@ class LoginViewModel with ChangeNotifier {
       controller: TextEditingController(), focusNode: FocusNode());
 
   bool _isLoading = false;
-  bool _isBtnEnable = false;
+
 
   bool get isLoading => _isLoading;
-
+  bool _isBtnEnable = false;
   bool get isBtnEnable => _isBtnEnable;
 
   set setLoading(bool loading) {

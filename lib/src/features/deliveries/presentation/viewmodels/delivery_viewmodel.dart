@@ -1,9 +1,7 @@
 import 'package:ezy_pod/src/features/deliveries/data/repositories/delivery_repository_impl.dart';
 import 'package:ezy_pod/src/features/deliveries/domain/repositories/delivery_repository.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:signature/signature.dart';
 
 class DeliveryViewModel with ChangeNotifier {
   final Ref _ref;
@@ -43,28 +41,9 @@ class DeliveryViewModel with ChangeNotifier {
   }
 
   /*=================Pending  Detail Screen =====================*/
-  TextEditingController notes = TextEditingController();
+  TextEditingController notes = TextEditingController(
+      text:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ");
 
-/*=================Delivery Form Screen =====================*/
 
-  final _signatureController = SignatureController();
-  Uint8List? _signatureBytes;
-
-  SignatureController get signatureController => _signatureController;
-
-  Uint8List? get signatureBytes => _signatureBytes;
-
-  void clearSignaturePad() {
-    _signatureBytes = null;
-    _signatureController.clear();
-    notifyListeners();
-  }
-
-  Future<void> saveSignatureValue() async {
-    final bytes = await _signatureController.toPngBytes();
-
-    _signatureBytes = bytes;
-
-    notifyListeners();
-  }
 }
