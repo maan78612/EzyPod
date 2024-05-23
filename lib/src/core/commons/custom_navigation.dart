@@ -14,25 +14,27 @@ class CustomNavigation {
 
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
-  void push(Widget page) {
+  void push(Widget page, {bool animate = true}) {
     Navigator.of(_navigatorKey.currentContext!).push(
       RoutingAnimation(
         child: page,
+        animate: animate,
       ),
     );
   }
 
-  void pushReplacement(Widget page) {
+  void pushReplacement(Widget page, {bool animate = true}) {
     Navigator.of(_navigatorKey.currentContext!).pushReplacement(
       RoutingAnimation(
         child: page,
+        animate: animate,
       ),
     );
   }
 
-  void pushAndRemoveUntil(Widget page) {
+  void pushAndRemoveUntil(Widget page, {bool animate = true}) {
     Navigator.of(_navigatorKey.currentContext!).pushAndRemoveUntil(
-      RoutingAnimation(child: page),
+      RoutingAnimation(child: page, animate: animate),
       (Route<dynamic> route) => false,
     );
   }
@@ -50,21 +52,31 @@ class CustomNavigation {
 class RoutingAnimation extends PageRouteBuilder {
   final Widget child;
   final AxisDirection direction;
+  final bool animate; // Add this parameter
 
-  RoutingAnimation({this.direction = AxisDirection.left, required this.child})
-      : super(
-            transitionDuration: const Duration(milliseconds: routingDuration),
-            pageBuilder: (context, animation, secondaryAnimation) => child);
+  RoutingAnimation({
+    this.direction = AxisDirection.left,
+    required this.animate,
+    required this.child,
+  }) : super(
+          transitionDuration: const Duration(milliseconds: routingDuration),
+          pageBuilder: (context, animation, secondaryAnimation) => child,
+        );
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation, Widget child) =>
-      SlideTransition(
+      Animation<double> secondaryAnimation, Widget child) {
+    if (animate) {
+      // Check the animate parameter here
+      return SlideTransition(
         position: Tween<Offset>(begin: getBeginOffset(), end: Offset.zero)
             .animate(animation),
-        // scale: animation,
         child: child,
       );
+    } else {
+      return child; // Return the child widget without animation
+    }
+  }
 
   Offset getBeginOffset() {
     switch (direction) {

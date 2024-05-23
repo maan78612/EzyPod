@@ -35,7 +35,7 @@ class CustomButton extends StatelessWidget {
         height: inputFieldHeight,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.r),
+            borderRadius: BorderRadius.circular(8.r),
             color: bgColor.withOpacity(isEnable ? 1 : 0.5)),
         child: isLoading
             ? Container(

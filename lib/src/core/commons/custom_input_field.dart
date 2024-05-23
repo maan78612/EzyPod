@@ -92,7 +92,7 @@ class _AuthInputFieldState extends State<CustomInputField> {
         if (widget.title != null) ...[
           Text(widget.title!,
               style: InterStyles.medium
-                  .copyWith(fontSize: 14.sp, color: const Color(0xff344054))),
+                  .copyWith(fontSize: 14.sp, color: AppColors.lightTextColor)),
           11.verticalSpace,
         ],
         TextFormField(
