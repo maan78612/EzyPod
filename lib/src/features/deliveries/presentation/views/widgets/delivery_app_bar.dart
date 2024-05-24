@@ -26,6 +26,7 @@ class CustomAppBar {
             ),
           ),
           leadingWidth: 30.sp,
+          centerTitle: true,
           title: Text(
             title,
             style: InterStyles.semiBold

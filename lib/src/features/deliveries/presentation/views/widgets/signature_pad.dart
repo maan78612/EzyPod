@@ -71,11 +71,11 @@ class SignaturePad extends ConsumerWidget {
           backgroundColor: AppColors.primaryColor.withOpacity(0.8),
           surfaceTintColor: Colors.transparent,
           child: Padding(
-            padding: EdgeInsets.all(8.0.sp),
+            padding: EdgeInsets.symmetric(horizontal: 24.0.sp),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                10.verticalSpace,
+                24.verticalSpace,
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10.0.r),
                   child: Signature(
@@ -95,7 +95,7 @@ class SignaturePad extends ConsumerWidget {
 
   Widget dialogButtons(DeliveryFormViewModel deliveryFormViewModel) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 32.sp),
+      padding: EdgeInsets.symmetric(vertical: 24.sp),
       child: Row(
         children: [
           Expanded(

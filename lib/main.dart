@@ -1,13 +1,20 @@
 import 'package:ezy_pod/src/core/commons/custom_navigation.dart';
 import 'package:ezy_pod/src/features/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   runApp(
     const ProviderScope(
-      child: MyApp(),
+      child: AnnotatedRegion(
+          value: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            systemStatusBarContrastEnforced: false,
+            statusBarIconBrightness: Brightness.dark,
+          ),
+          child: MyApp()),
     ),
   );
 }

@@ -5,6 +5,7 @@ import 'package:ezy_pod/src/core/constants/fonts.dart';
 import 'package:ezy_pod/src/core/constants/images.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/viewmodels/delivery_viewmodel.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/delivery_form/delivered_form.dart';
+import 'package:ezy_pod/src/features/deliveries/presentation/views/delivery_form/undelivered_form.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/widgets/delivery_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -75,7 +76,9 @@ class PendingDetailScreen extends ConsumerWidget {
             child: CustomButton(
                 title: "Undelivered",
                 bgColor: AppColors.redColor,
-                onPressed: () {}),
+                onPressed: () {
+                  CustomNavigation().push(UndeliveredForm());
+                }),
           ),
         ],
       ),

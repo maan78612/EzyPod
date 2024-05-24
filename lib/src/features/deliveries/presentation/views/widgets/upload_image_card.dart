@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:ezy_pod/src/core/commons/custom_inkwell.dart';
 import 'package:ezy_pod/src/core/commons/custom_navigation.dart';
 import 'package:ezy_pod/src/core/constants/colors.dart';
@@ -24,6 +22,7 @@ class UploadImageCard extends ConsumerWidget {
     final deliveryViewModel = ref.watch(deliveryFormViewModelProvider);
     return Container(
       width: ScreenUtil().screenWidth,
+      height: 130.h,
       padding: EdgeInsets.symmetric(vertical: 16.sp),
       decoration: BoxDecoration(
           border: Border.all(color: AppColors.borderColor),
@@ -74,19 +73,18 @@ class UploadImageCard extends ConsumerWidget {
                       child: Image.file(
                         deliveryViewModel.uploadedImage!,
                         fit: BoxFit.fitWidth,
-                        height: 85.h,
                       ),
                     ),
                   ),
                 ),
                 CommonInkWell(
-                  onTap: (){
-                    deliveryViewModel.removeUploadedImg();
-                  },
+                    onTap: () {
+                      deliveryViewModel.removeUploadedImg();
+                    },
                     child: const Icon(
-                  Icons.delete_forever,
-                  color: AppColors.redColor,
-                )),
+                      Icons.delete_forever,
+                      color: AppColors.redColor,
+                    )),
                 20.horizontalSpace,
               ],
             ),
@@ -98,30 +96,50 @@ class UploadImageCard extends ConsumerWidget {
     showBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return SizedBox(
-          height: 200,
+        return Container(
+          decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10.r),
+                  topRight: Radius.circular(10.r))),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              CommonInkWell(
+                onTap: () => Navigator.pop(context),
+                child: const Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(Icons.close, color: AppColors.whiteColor),
+                  ),
+                ),
+              ),
               ListTile(
-                leading: const Icon(Icons.camera),
-                title: Text('Camera', style: InterStyles.regular),
+                leading: const Icon(Icons.camera, color: AppColors.whiteColor),
+                title: Text('Camera',
+                    style: InterStyles.regular
+                        .copyWith(color: AppColors.whiteColor)),
                 onTap: () async {
                   await deliverFormViewModel
                       .imageOptionClick(ImageSource.camera);
                   CustomNavigation().pop();
                 },
               ),
+              const Divider(color: AppColors.whiteColor),
               ListTile(
-                leading: const Icon(
-                  Icons.image,
-                ),
-                title: Text('Gallery', style: InterStyles.regular),
+                leading: const Icon(Icons.image, color: AppColors.whiteColor),
+                title: Text('Gallery',
+                    style: InterStyles.regular
+                        .copyWith(color: AppColors.whiteColor)),
                 onTap: () async {
                   await deliverFormViewModel
                       .imageOptionClick(ImageSource.gallery);
                   CustomNavigation().pop();
                 },
               ),
+              20.verticalSpace
             ],
           ),
         );

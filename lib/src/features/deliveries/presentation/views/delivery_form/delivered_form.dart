@@ -4,6 +4,8 @@ import 'package:ezy_pod/src/core/constants/colors.dart';
 import 'package:ezy_pod/src/core/constants/fonts.dart';
 import 'package:ezy_pod/src/core/constants/images.dart';
 import 'package:ezy_pod/src/core/constants/text_field_validator.dart';
+import 'package:ezy_pod/src/core/enums/snackbar_status.dart';
+import 'package:ezy_pod/src/core/utilities.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/viewmodels/delivery_form_viewmodel.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/widgets/delivery_app_bar.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/widgets/signature_pad.dart';
@@ -39,12 +41,6 @@ class DeliveredForm extends ConsumerWidget {
                 controller: deliveryFormViewModel.personNameCon,
                 title: "Person Name",
                 hint: "Enter person name",
-                onChange: (value) {
-                  deliveryFormViewModel.onChange(
-                      con: deliveryFormViewModel.personNameCon,
-                      value: value,
-                      validator: TextFieldValidator.validateUid);
-                },
               ),
             ),
             UploadImageCard(
@@ -55,7 +51,15 @@ class DeliveredForm extends ConsumerWidget {
             CustomButton(
                 title: "Submit Delivery",
                 bgColor: AppColors.greenColor,
-                onPressed: () {}),
+                onPressed: () {
+                  deliveryFormViewModel.submit(
+                      showSnackBarMsg: ({
+                    required SnackBarType snackType,
+                    required String message,
+                  }) =>
+                          Utils.customSnackBar(message, snackType, context));
+
+                }),
           ],
         ),
       ),

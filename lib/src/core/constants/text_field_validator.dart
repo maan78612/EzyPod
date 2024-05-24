@@ -32,6 +32,11 @@ class TextFieldValidator {
     return null;
   }
 
+  static String? validatePersonName(String? value) {
+    if (value!.isEmpty) return "Required field is empty";
+
+    return null;
+  }
   static String? validateField(String? value) {
     if (value!.isEmpty) return "Required field is empty";
 
