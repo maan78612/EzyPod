@@ -148,7 +148,7 @@ class _AuthInputFieldState extends State<CustomInputField> {
             disabledBorder: widget.isDecorationEnable ?? false
                 ? inputBorder
                 : InputBorder.none,
-            prefixIconConstraints: BoxConstraints(maxHeight: 13.sp),
+            prefixIconConstraints: BoxConstraints(maxHeight: 20.sp),
             suffixIconConstraints: BoxConstraints(maxHeight: 20.sp),
             prefixIcon: Padding(
               padding: EdgeInsetsDirectional.symmetric(horizontal: 5.sp),

@@ -4,6 +4,7 @@ import 'package:ezy_pod/src/core/constants/colors.dart';
 import 'package:ezy_pod/src/core/constants/fonts.dart';
 import 'package:ezy_pod/src/core/constants/images.dart';
 import 'package:ezy_pod/src/core/enums/delivery_status.dart';
+import 'package:ezy_pod/src/features/chat/presentation/views/chat_room_screen.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/deliveries_screen.dart';
 import 'package:ezy_pod/src/features/home/presentation/viewmodels/home_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -148,7 +149,9 @@ class HomeScreen extends ConsumerWidget {
         const Spacer(),
         Image.asset(AppImages.car, width: 70.sp),
         const Spacer(),
-        SvgPicture.asset(AppImages.chat, width: 18.sp),
+        CommonInkWell(
+            onTap: () => CustomNavigation().push(ChatRoomScreen()),
+            child: SvgPicture.asset(AppImages.chat, width: 18.sp)),
         16.horizontalSpace,
         Image.asset(AppImages.profile, width: 25.sp),
       ]),

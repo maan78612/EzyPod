@@ -10,6 +10,8 @@ class AppImages {
   static const String appIcon = "assets/images/app_icon.svg";
   static const String logo = "assets/images/logo.svg";
   static const String notifications = "assets/images/notifications.png";
+  static const String user1 = "assets/images/user1.png";
+  static const String user2 = "assets/images/user2.png";
   static const String pendingDelivery = "assets/images/pending_delivery.png";
   static const String phone = "assets/images/phone.svg";
   static const String profile = "assets/images/profile.png";
