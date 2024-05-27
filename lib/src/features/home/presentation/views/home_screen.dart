@@ -7,6 +7,7 @@ import 'package:ezy_pod/src/core/enums/delivery_status.dart';
 import 'package:ezy_pod/src/features/chat/presentation/views/chat_room_screen.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/deliveries_screen.dart';
 import 'package:ezy_pod/src/features/home/presentation/viewmodels/home_viewmodel.dart';
+import 'package:ezy_pod/src/features/notifications/presentation/views/notifications_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -78,7 +79,9 @@ class HomeScreen extends ConsumerWidget {
                         img: AppImages.notifications,
                         title: "Notifications",
                         count: "2",
-                        onTap: () {}),
+                        onTap: () {
+                          CustomNavigation().push(NotificationScreen());
+                        }),
                   ],
                 ),
               )
@@ -153,7 +156,9 @@ class HomeScreen extends ConsumerWidget {
             onTap: () => CustomNavigation().push(ChatRoomScreen()),
             child: SvgPicture.asset(AppImages.chat, width: 18.sp)),
         16.horizontalSpace,
-        Image.asset(AppImages.profile, width: 25.sp),
+        ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(200.r)),
+            child: Image.asset(AppImages.profile, width: 25.sp)),
       ]),
     );
   }

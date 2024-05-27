@@ -11,8 +11,8 @@ class ChatRepositoryImpl implements ChatRepository {
     chatRoomList.add(ChatRoom(
       id: "1",
       chatUsers: [
-        ChatUser(id: '1', name: 'John', image: AppImages.user1),
-        ChatUser(id: '2', name: 'Jane', image: AppImages.user2)
+        ChatUser(id: '1', name: 'John', image: AppImages.profile),
+        ChatUser(id: '2', name: 'Jane', image: AppImages.user1)
       ],
       createAt: DateTime.now(),
       messages: [
@@ -21,7 +21,7 @@ class ChatRepositoryImpl implements ChatRepository {
           text: "Hello!",
           senderId: "1",
           senderName: "John",
-          timestamp: DateTime.now(),
+          timestamp: DateTime.now().subtract(const Duration(hours: 3)),
           read: false,
         ),
         ChatMessage(
@@ -29,7 +29,7 @@ class ChatRepositoryImpl implements ChatRepository {
           text: "Hi!",
           senderId: "2",
           senderName: "Jane",
-          timestamp: DateTime.now().add(const Duration(minutes: 1)),
+          timestamp: DateTime.now().subtract(const Duration(hours: 2)),
           read: true,
         ),
         ChatMessage(
@@ -37,7 +37,7 @@ class ChatRepositoryImpl implements ChatRepository {
           text: "How are you?",
           senderId: "1",
           senderName: "John",
-          timestamp: DateTime.now().add(const Duration(minutes: 2)),
+          timestamp: DateTime.now().subtract(const Duration(hours: 1)),
           read: false,
         ),
         ChatMessage(
@@ -45,7 +45,7 @@ class ChatRepositoryImpl implements ChatRepository {
           text: "I'm good, thanks!",
           senderId: "2",
           senderName: "Jane",
-          timestamp: DateTime.now().add(const Duration(minutes: 3)),
+          timestamp: DateTime.now().subtract(const Duration(minutes: 50)),
           read: true,
         ),
       ],
@@ -53,8 +53,8 @@ class ChatRepositoryImpl implements ChatRepository {
     chatRoomList.add(ChatRoom(
       id: "2",
       chatUsers: [
-        ChatUser(id: '3', name: 'Lavern', image: AppImages.user2),
-        ChatUser(id: '4', name: 'Laboy', image: AppImages.user1)
+        ChatUser(id: '1', name: 'John', image: AppImages.profile),
+        ChatUser(id: '3', name: 'Laboy', image: AppImages.user2)
       ],
       createAt: DateTime.now(),
       messages: [
@@ -63,15 +63,15 @@ class ChatRepositoryImpl implements ChatRepository {
           text: "How are you!",
           senderId: "3",
           senderName: "Lavern",
-          timestamp: DateTime.now(),
+          timestamp:  DateTime.now().subtract(const Duration(hours: 3)),
           read: false,
         ),
         ChatMessage(
           id: "2",
           text: "I am fine!",
-          senderId: "4",
+          senderId: "1",
           senderName: "Laboy",
-          timestamp: DateTime.now().add(const Duration(minutes: 1)),
+          timestamp: DateTime.now().subtract(const Duration(minutes: 10)),
           read: true,
         ),
         ChatMessage(
@@ -79,23 +79,23 @@ class ChatRepositoryImpl implements ChatRepository {
           text: "That's great",
           senderId: "3",
           senderName: "Lavern",
-          timestamp: DateTime.now().add(const Duration(minutes: 2)),
+          timestamp: DateTime.now().subtract(const Duration(minutes: 10)),
           read: false,
         ),
         ChatMessage(
           id: "4",
           text: "Did you have today's assignment questions?",
-          senderId: "4",
+          senderId: "1",
           senderName: "Laboy",
-          timestamp: DateTime.now().add(const Duration(minutes: 3)),
+          timestamp: DateTime.now().subtract(const Duration(minutes: 7)),
           read: true,
         ),
         ChatMessage(
           id: "5",
           text: "Math's assignment*",
-          senderId: "4",
+          senderId: "1",
           senderName: "Laboy",
-          timestamp: DateTime.now().add(const Duration(minutes: 3)),
+          timestamp: DateTime.now().subtract(const Duration(minutes: 5)),
           read: true,
         ),
       ],
@@ -106,7 +106,5 @@ class ChatRepositoryImpl implements ChatRepository {
   @override
   void sendMessage(ChatMessage message, ChatRoom chatRoom) {
     chatRoom.messages.add(message);
-
-    print(chatRoom.toJson());
   }
 }

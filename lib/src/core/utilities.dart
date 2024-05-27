@@ -1,12 +1,9 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:ezy_pod/src/core/commons/custom_navigation.dart';
 import 'package:ezy_pod/src/core/constants/colors.dart';
-import 'package:ezy_pod/src/core/constants/fonts.dart';
 import 'package:ezy_pod/src/core/enums/snackbar_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'constants/globals.dart';
 
 class Utils {
   static customSnackBar(String msg, SnackBarType type, BuildContext context) {

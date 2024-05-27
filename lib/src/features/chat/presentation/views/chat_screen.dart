@@ -113,6 +113,8 @@ class ChatScreen extends ConsumerWidget {
                               child: messageBubble(
                                 isOtherUserMessage: isOtherUserMessage,
                                 message: message.text!,
+                                data: chatViewModel
+                                    .formattedMsgDate(message.timestamp),
                               ),
                             ),
                             if (!isOtherUserMessage) ...[
@@ -188,7 +190,9 @@ class ChatScreen extends ConsumerWidget {
   }
 
   Widget messageBubble(
-      {required bool isOtherUserMessage, required String message}) {
+      {required bool isOtherUserMessage,
+      required String message,
+      required String data}) {
     return Column(
       crossAxisAlignment: isOtherUserMessage
           ? CrossAxisAlignment.start
@@ -219,7 +223,7 @@ class ChatScreen extends ConsumerWidget {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 6.sp),
           child: Text(
-            "11:50am",
+            data,
             style: InterStyles.regular.copyWith(fontSize: 12.sp),
           ),
         )

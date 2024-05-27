@@ -36,6 +36,7 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
       appBar: AppBar(
         surfaceTintColor: AppColors.whiteColor,
         backgroundColor: AppColors.whiteColor,
+        centerTitle: true,
         bottom: const PreferredSize(
             preferredSize: Size.fromHeight(2),
             child: Divider(color: AppColors.borderColor)),
@@ -52,6 +53,9 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
             CustomInputField(
               controller: chatViewModel.searchCon,
               hint: "Search",
+              onChange: (value) {
+                chatViewModel.searchChatRooms(value);
+              },
               prefixWidget: Icon(
                 Icons.search,
                 color: const Color(0xff9CA3AF),
@@ -60,18 +64,19 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: chatViewModel.charRoomList.length,
+                itemCount: chatViewModel.filteredChatRoomList.length,
                 itemBuilder: (context, index) {
-                  final chatRoomData = chatViewModel.charRoomList[index];
+                  final chatRoomData =
+                      chatViewModel.filteredChatRoomList[index];
                   return MessageTile(
                     chatRoomData: chatRoomData,
                     chatViewModelProvider: chatViewModelProvider,
 
                     /// TODO: change this we do back-end
-                    otherUser: chatRoomData.chatUsers.firstWhere(
-                        (user) => (user.id == '1' || user.id == '3')),
-                    myUser: chatRoomData.chatUsers.firstWhere(
-                        (user) => (user.id == '1' || user.id == '3')),
+                    otherUser: chatRoomData.chatUsers
+                        .firstWhere((user) => (user.id != '1')),
+                    myUser: chatRoomData.chatUsers
+                        .firstWhere((user) => (user.id == '1')),
                   );
                 },
               ),
@@ -95,7 +100,7 @@ class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
 }
 
 // Message tile widget
-class MessageTile extends StatelessWidget {
+class MessageTile extends ConsumerWidget {
   final ChatRoom chatRoomData;
   final ChatUser otherUser;
   final ChatUser myUser;
@@ -110,7 +115,8 @@ class MessageTile extends StatelessWidget {
       required this.chatViewModelProvider});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final chatViewModel = ref.watch(chatViewModelProvider);
     return CommonInkWell(
       onTap: () {
         CustomNavigation().push(ChatScreen(
@@ -145,7 +151,7 @@ class MessageTile extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '3h',
+                        chatViewModel.showDataTimeAgoString(chatRoomData.messages.last.timestamp),
                         style: InterStyles.medium.copyWith(
                             fontSize: 12.sp,
                             color: AppColors.blackColor.withOpacity(0.4)),
