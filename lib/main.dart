@@ -1,11 +1,18 @@
+import 'package:ezy_pod/firebase_options.dart';
 import 'package:ezy_pod/src/core/commons/custom_navigation.dart';
+import 'package:ezy_pod/src/core/utilities/firebase_notification_manager.dart';
 import 'package:ezy_pod/src/features/splash.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     const ProviderScope(
       child: AnnotatedRegion(
@@ -14,7 +21,9 @@ void main() {
             systemStatusBarContrastEnforced: false,
             statusBarIconBrightness: Brightness.dark,
           ),
-          child: MyApp()),
+          child: FBNotificationManager(
+            page: MyApp(),
+          )),
     ),
   );
 }

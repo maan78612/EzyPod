@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "188737939426",
+    "project_id": "ezy-pod-12345",
+    "storage_bucket": "ezy-pod-12345.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188737939426:android:b4fe7ac0b4ad3928e2bbbb",
+        "android_client_info": {
+          "package_name": "com.ep.ezypod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHEC8Su74faFBUnkVv7fhV2tlUBGxF7wU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

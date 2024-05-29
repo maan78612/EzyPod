@@ -25,6 +25,8 @@ class FetchDataException extends AppExceptions {
   FetchDataException([String? message]) : super("Error During Communication:: ", message);
 }
 
+
+
 // This is a custom exception class for bad request errors.
 class BadRequestException extends AppExceptions {
   // This is the constructor for the BadRequestException class.
@@ -55,7 +57,14 @@ class InternalServerError extends AppExceptions {
 }
 class DataAlreadyAddedError extends AppExceptions {
   // This is the constructor for the BadRequestException class.
-  DataAlreadyAddedError([String? message]) : super("Data Already Found:: ", message);
+  DataAlreadyAddedError([String? message])
+      : super("Data Already Found:: ", message);
 
+
+}
+
+class DioExceptionError extends AppExceptions {
+  // This is the constructor for the BadRequestException class.
+  DioExceptionError([String? message]) : super("Error occurred due to:: ", message);
 }
 

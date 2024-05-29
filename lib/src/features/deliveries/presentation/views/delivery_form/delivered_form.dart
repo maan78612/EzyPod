@@ -3,7 +3,7 @@ import 'package:ezy_pod/src/core/commons/custom_input_field.dart';
 import 'package:ezy_pod/src/core/constants/colors.dart';
 import 'package:ezy_pod/src/core/constants/fonts.dart';
 import 'package:ezy_pod/src/core/enums/snackbar_status.dart';
-import 'package:ezy_pod/src/core/utilities.dart';
+import 'package:ezy_pod/src/core/utilities/custom_snack_bar.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/viewmodels/delivery_form_viewmodel.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/widgets/delivery_app_bar.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/widgets/signature_pad.dart';
@@ -54,8 +54,8 @@ class DeliveredForm extends ConsumerWidget {
                     required SnackBarType snackType,
                     required String message,
                   }) =>
-                          Utils.customSnackBar(message, snackType, context));
-
+                          CustomSnackBar.showSnackBar(
+                              message, snackType, context));
                 }),
           ],
         ),

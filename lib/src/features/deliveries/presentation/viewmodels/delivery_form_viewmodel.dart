@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:ezy_pod/src/core/commons/custom_navigation.dart';
 import 'package:ezy_pod/src/core/commons/custom_text_controller.dart';
 import 'package:ezy_pod/src/core/enums/snackbar_status.dart';
-import 'package:ezy_pod/src/core/utilities.dart';
+import 'package:ezy_pod/src/core/utilities/custom_snack_bar.dart';
 import 'package:ezy_pod/src/features/deliveries/data/repositories/delivery_repository_impl.dart';
 import 'package:ezy_pod/src/features/deliveries/domain/repositories/delivery_repository.dart';
 import 'package:flutter/material.dart';
