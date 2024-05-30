@@ -6,5 +6,5 @@ final userProvider = StateProvider<User?>((ref) => null);
 const int routingDuration = 300;
 double inputFieldHeight = 44.sp;
 double hMargin = 30.sp;
-const String channelId = 'your_channel_id';
-const String channelName = 'your_channel_name';
+String? fcmToken;
+

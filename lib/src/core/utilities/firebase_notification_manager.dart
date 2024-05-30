@@ -42,8 +42,18 @@ class _FBNotificationWrapper extends State<FBNotificationManager> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await fetchAndSaveToken();
       await notificationInit();
+
     });
+  }
+
+  Future<void> fetchAndSaveToken() async {
+    final token = await _firebaseMessaging.getToken();
+
+    /// code below will update token in login api
+    fcmToken = token;
+    debugPrint(token);
   }
 
   @override
@@ -67,22 +77,12 @@ class _FBNotificationWrapper extends State<FBNotificationManager> {
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       debugPrint('User granted permission');
       await initializeFlutterLocalNotifications();
-      final token = await _firebaseMessaging.getToken();
-      debugPrint(token);
-
-      // /* If you want to show notification and banner when app is open [ForeGround]*/
-      // await _firebaseMessaging
-      //     .setForegroundNotificationPresentationOptions(
-      //   alert: true,
-      //   badge: true,
-      //   sound: true,
-      // );
 
       /// To get notification on foreground and background state
-      notificationOnBackgroundAndForeground();
+      await notificationOnBackgroundAndForeground();
 
       /// To get notification of termination state
-      notificationOnTermination();
+      await notificationOnTermination();
     } else {
       debugPrint('User declined or has not accepted permission');
     }
@@ -95,29 +95,27 @@ class _FBNotificationWrapper extends State<FBNotificationManager> {
     if (msgOnTermination != null) {
       debugPrint(
           "Message on [APP TERMINATED] ${msgOnTermination.notification?.body}");
-
-      showNotification(
-          int.parse(msgOnTermination.messageId ?? "0"),
-          msgOnTermination.notification?.title,
-          msgOnTermination.notification?.body);
     }
   }
 
   notificationOnBackgroundAndForeground() {
     debugPrint("test");
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      showNotification(int.parse(message.messageId ?? "0"),
-          message.notification?.title, message.notification?.body);
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      /// showNotification only works when app is in foreground otherwise
+      /// uses it's own push notification banner for background and termination state
+
+      await showNotification(message.hashCode, message.notification?.title,
+          message.notification?.body);
 
       debugPrint(
-          "Message on [APP Background or Foreground] ${message.notification?.body}");
+          "Message on [APP Background or Foreground] ${message.notification?.title}");
     });
   }
 
-  void showNotification(int id, String? title, String? body) {
-    flutterLocalNotificationsPlugin.show(
+  Future<void> showNotification(int id, String? title, String? body) async {
+    await flutterLocalNotificationsPlugin.show(
       id,
-      title,
+      "$title",
       body,
       notificationDetails,
     );
