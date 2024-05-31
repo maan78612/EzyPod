@@ -9,6 +9,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  debugPrint(
+      "\n=========== Handling a background message: ${message.messageId} ============");
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -26,11 +31,6 @@ Future<void> main() async {
           )),
     ),
   );
-}
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  debugPrint(
-      "\n=========== Handling a background message: ${message.messageId} ============");
 }
 
 class MyApp extends StatelessWidget {

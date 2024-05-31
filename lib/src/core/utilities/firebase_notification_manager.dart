@@ -1,7 +1,7 @@
 import 'package:ezy_pod/src/core/constants/globals.dart';
+import 'package:ezy_pod/src/core/utilities/flutter_local_notification_manager.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class FBNotificationManager extends StatefulWidget {
   final Widget page;
@@ -13,30 +13,9 @@ class FBNotificationManager extends StatefulWidget {
 }
 
 class _FBNotificationWrapper extends State<FBNotificationManager> {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
   final _firebaseMessaging = FirebaseMessaging.instance;
-
-  /// Set channel for Android
-  static const AndroidNotificationChannel channel = AndroidNotificationChannel(
-      "high_importance_channel", "High Importance Notifications",
-      importance: Importance.max, showBadge: true);
-
-  /// Set Flutter local notification details
-  final notificationDetails = NotificationDetails(
-    android: AndroidNotificationDetails(
-      channel.id,
-      channel.name,
-      importance: Importance.high,
-      priority: Priority.high,
-    ),
-    iOS: const DarwinNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
-    ),
-  );
+  final FlutterLocalNotificationManager _flutterLocalNotificationManager =
+      FlutterLocalNotificationManager();
 
   @override
   void initState() {
@@ -44,7 +23,6 @@ class _FBNotificationWrapper extends State<FBNotificationManager> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await fetchAndSaveToken();
       await notificationInit();
-
     });
   }
 
@@ -61,6 +39,9 @@ class _FBNotificationWrapper extends State<FBNotificationManager> {
     return widget.page;
   }
 
+
+
+
   Future<void> notificationInit() async {
     /// notification permission setting
     NotificationSettings settings = await _firebaseMessaging.requestPermission(
@@ -76,7 +57,7 @@ class _FBNotificationWrapper extends State<FBNotificationManager> {
     /// check permission for notification
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       debugPrint('User granted permission');
-      await initializeFlutterLocalNotifications();
+      await _flutterLocalNotificationManager.onInit();
 
       /// To get notification on foreground and background state
       await notificationOnBackgroundAndForeground();
@@ -104,39 +85,11 @@ class _FBNotificationWrapper extends State<FBNotificationManager> {
       /// showNotification only works when app is in foreground otherwise
       /// uses it's own push notification banner for background and termination state
 
-      await showNotification(message.hashCode, message.notification?.title,
-          message.notification?.body);
+      await _flutterLocalNotificationManager.showNotification(message.hashCode,
+          message.notification?.title, message.notification?.body);
 
       debugPrint(
           "Message on [APP Background or Foreground] ${message.notification?.title}");
     });
-  }
-
-  Future<void> showNotification(int id, String? title, String? body) async {
-    await flutterLocalNotificationsPlugin.show(
-      id,
-      "$title",
-      body,
-      notificationDetails,
-    );
-  }
-
-  /*========= initialization of Flutter Local Notifications=========*/
-  Future<void> initializeFlutterLocalNotifications() async {
-    var initializationSettingsAndroid =
-        const AndroidInitializationSettings('@mipmap/notification_icon');
-
-    const DarwinInitializationSettings initializationSettingsDarwin =
-        DarwinInitializationSettings(
-      requestSoundPermission: false,
-      requestBadgePermission: false,
-      requestAlertPermission: false,
-    );
-
-    var initializationSettings = InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: initializationSettingsDarwin,
-    );
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 }
