@@ -19,7 +19,7 @@ class ChatRoomScreen extends ConsumerStatefulWidget {
 
 class _ChatRoomScreenState extends ConsumerState<ChatRoomScreen> {
   final chatViewModelProvider = ChangeNotifierProvider<ChatViewModel>((ref) {
-    return ChatViewModel(ref);
+    return ChatViewModel();
   });
 
   @override
@@ -151,7 +151,8 @@ class MessageTile extends ConsumerWidget {
                         ),
                       ),
                       Text(
-                        chatViewModel.showDataTimeAgoString(chatRoomData.messages.last.timestamp),
+                        chatViewModel.showDataTimeAgoString(
+                            chatRoomData.messages.last.timestamp),
                         style: InterStyles.medium.copyWith(
                             fontSize: 12.sp,
                             color: AppColors.blackColor.withOpacity(0.4)),

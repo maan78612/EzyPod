@@ -15,7 +15,7 @@ import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends ConsumerWidget {
   final homeViewModelProvider = ChangeNotifierProvider<HomeViewModel>((ref) {
-    return HomeViewModel(ref);
+    return HomeViewModel();
   });
 
   HomeScreen({super.key});
@@ -153,7 +153,7 @@ class HomeScreen extends ConsumerWidget {
         Image.asset(AppImages.car, width: 70.sp),
         const Spacer(),
         CommonInkWell(
-            onTap: () => CustomNavigation().push(ChatRoomScreen()),
+            onTap: () => CustomNavigation().push(const ChatRoomScreen()),
             child: SvgPicture.asset(AppImages.chat, width: 18.sp)),
         16.horizontalSpace,
         ClipRRect(

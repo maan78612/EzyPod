@@ -14,7 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class UndeliveredForm extends ConsumerWidget {
   final deliveryFormViewModelProvider =
       ChangeNotifierProvider<DeliveryFormViewModel>((ref) {
-    return DeliveryFormViewModel(ref);
+    return DeliveryFormViewModel();
   });
 
   UndeliveredForm({super.key});

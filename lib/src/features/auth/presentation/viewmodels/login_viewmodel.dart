@@ -4,13 +4,8 @@ import 'package:ezy_pod/src/features/auth/data/repositories/auth_repository_impl
 import 'package:ezy_pod/src/features/auth/domain/repositories/auth_repository.dart';
 import 'package:ezy_pod/src/features/home/presentation/views/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginViewModel with ChangeNotifier {
-  final Ref _ref;
-
-  LoginViewModel(this._ref);
-
   final AuthRepository _authRepository = AuthRepositoryImpl();
 
   CustomTextController uIdCon = CustomTextController(
@@ -22,9 +17,9 @@ class LoginViewModel with ChangeNotifier {
 
   bool _isLoading = false;
 
-
   bool get isLoading => _isLoading;
   bool _isBtnEnable = false;
+
   bool get isBtnEnable => _isBtnEnable;
 
   set setLoading(bool loading) {

@@ -71,10 +71,10 @@ class CustomInputField extends StatefulWidget {
       this.onEditingComplete});
 
   @override
-  _AuthInputFieldState createState() => _AuthInputFieldState();
+  State<CustomInputField> createState() => _CustomInputField();
 }
 
-class _AuthInputFieldState extends State<CustomInputField> {
+class _CustomInputField extends State<CustomInputField> {
   late bool obscure;
 
   @override

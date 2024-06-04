@@ -4,18 +4,17 @@ import 'package:ezy_pod/src/features/chat/domain/models/chat_message.dart';
 import 'package:ezy_pod/src/features/chat/domain/models/chat_room.dart';
 import 'package:ezy_pod/src/features/chat/domain/repositories/chat_repository.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class ChatViewModel with ChangeNotifier {
-  final Ref _ref;
+
   final ChatRepository _charRepository = ChatRepositoryImpl();
   List<ChatRoom> _charRoomList = [];
   List<ChatRoom> _filteredChatRoomList = [];
 
   List<ChatRoom> get filteredChatRoomList => _filteredChatRoomList;
 
-  ChatViewModel(this._ref);
+
 
   bool _isLoading = false;
 

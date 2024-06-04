@@ -17,7 +17,7 @@ class DeliveryScreen extends ConsumerWidget {
 
   final deliveryViewModelProvider =
       ChangeNotifierProvider<DeliveryViewModel>((ref) {
-    return DeliveryViewModel(ref);
+    return DeliveryViewModel();
   });
 
   @override

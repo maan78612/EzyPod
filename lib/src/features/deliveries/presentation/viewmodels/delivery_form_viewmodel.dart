@@ -3,19 +3,16 @@ import 'dart:io';
 import 'package:ezy_pod/src/core/commons/custom_navigation.dart';
 import 'package:ezy_pod/src/core/commons/custom_text_controller.dart';
 import 'package:ezy_pod/src/core/enums/snackbar_status.dart';
-import 'package:ezy_pod/src/core/utilities/custom_snack_bar.dart';
 import 'package:ezy_pod/src/features/deliveries/data/repositories/delivery_repository_impl.dart';
 import 'package:ezy_pod/src/features/deliveries/domain/repositories/delivery_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:signature/signature.dart';
 
 class DeliveryFormViewModel with ChangeNotifier {
-  final Ref _ref;
 
-  DeliveryFormViewModel(this._ref);
+
 
   final DeliveryRepository _deliveryRepository = DeliveryRepositoryImpl();
 
@@ -94,7 +91,6 @@ class DeliveryFormViewModel with ChangeNotifier {
           showSnackBarMsg(
               message: "Delivered form submitted successfully",
               snackType: SnackBarType.success);
-
         } else {
           showSnackBarMsg(
               message: "Please upload image to proceed",
@@ -161,7 +157,6 @@ class DeliveryFormViewModel with ChangeNotifier {
         showSnackBarMsg(
             message: "Undelivered form submitted successfully",
             snackType: SnackBarType.success);
-
       } else {
         showSnackBarMsg(
             message: "Please select reason", snackType: SnackBarType.error);

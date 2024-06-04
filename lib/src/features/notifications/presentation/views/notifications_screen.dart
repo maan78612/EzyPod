@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class NotificationScreen extends ConsumerWidget {
   final notificationsViewModelProvider =
       ChangeNotifierProvider<NotificationsViewModel>((ref) {
-    return NotificationsViewModel(ref);
+    return NotificationsViewModel();
   });
 
   NotificationScreen({super.key});
@@ -23,7 +23,7 @@ class NotificationScreen extends ConsumerWidget {
         surfaceTintColor: AppColors.whiteColor,
         backgroundColor: AppColors.whiteColor,
         centerTitle: true,
-        bottom:  PreferredSize(
+        bottom: PreferredSize(
             preferredSize: Size.fromHeight(10.sp),
             child: const Divider(color: AppColors.borderColor)),
         title: Text(
@@ -90,7 +90,10 @@ class NotificationScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const Divider(color: AppColors.borderColor,height: 1,),
+          const Divider(
+            color: AppColors.borderColor,
+            height: 1,
+          ),
         ],
       ),
     );

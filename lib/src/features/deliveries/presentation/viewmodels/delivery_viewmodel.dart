@@ -1,13 +1,9 @@
 import 'package:ezy_pod/src/features/deliveries/data/repositories/delivery_repository_impl.dart';
 import 'package:ezy_pod/src/features/deliveries/domain/repositories/delivery_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DeliveryViewModel with ChangeNotifier {
-  final Ref _ref;
   final DeliveryRepository _deliveryRepository = DeliveryRepositoryImpl();
-
-  DeliveryViewModel(this._ref);
 
   bool _isLoading = false;
 
@@ -44,6 +40,4 @@ class DeliveryViewModel with ChangeNotifier {
   TextEditingController notes = TextEditingController(
       text:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ");
-
-
 }

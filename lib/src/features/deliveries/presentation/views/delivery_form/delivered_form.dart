@@ -17,7 +17,7 @@ class DeliveredForm extends ConsumerWidget {
 
   final deliveryFormViewModelProvider =
       ChangeNotifierProvider<DeliveryFormViewModel>((ref) {
-    return DeliveryFormViewModel(ref);
+    return DeliveryFormViewModel();
   });
 
   @override

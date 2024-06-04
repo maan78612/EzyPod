@@ -13,7 +13,7 @@ import 'package:flutter_svg/svg.dart';
 
 class LoginScreen extends ConsumerWidget {
   final loginViewModelProvider = ChangeNotifierProvider<LoginViewModel>((ref) {
-    return LoginViewModel(ref);
+    return LoginViewModel();
   });
 
   LoginScreen({super.key});
