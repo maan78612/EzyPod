@@ -53,7 +53,7 @@ class LoginViewModel with ChangeNotifier {
   }
 
   Future<void> login() async {
-    CustomNavigation().pushAndRemoveUntil(HomeScreen());
+    CustomNavigation().pushAndRemoveUntil(const HomeScreen());
 
     /// temporarily comment below code waiting for apis
     // setLoading = true;

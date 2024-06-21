@@ -1,9 +1,14 @@
 import 'package:ezy_pod/src/features/deliveries/data/repositories/delivery_repository_impl.dart';
+import 'package:ezy_pod/src/features/deliveries/domain/models/address_model.dart';
 import 'package:ezy_pod/src/features/deliveries/domain/repositories/delivery_repository.dart';
+import 'package:ezy_pod/src/features/home/domain/models/deliveries.dart';
 import 'package:flutter/material.dart';
 
 class DeliveryViewModel with ChangeNotifier {
   final DeliveryRepository _deliveryRepository = DeliveryRepositoryImpl();
+
+  List<DeliveriesResult> deliveriesList = [];
+  List<AddressResult> addresses = [];
 
   bool _isLoading = false;
 
@@ -15,6 +20,13 @@ class DeliveryViewModel with ChangeNotifier {
   }
 
   int currentIndex = 0;
+
+  void init(
+      {required List<DeliveriesResult> deliveriesList,
+      required List<AddressResult> addresses}) {
+    this.deliveriesList = deliveriesList;
+    this.addresses = addresses;
+  }
 
   void onNextClicked(int listLength) {
     if (currentIndex + 7 < listLength) {
