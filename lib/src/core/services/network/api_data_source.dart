@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:ezy_pod/src/core/services/network/app_exceptions.dart';
 import 'package:flutter/foundation.dart';
@@ -46,16 +47,38 @@ class NetworkApi {
     required String url,
     required Map<String, dynamic> body,
     Map<String, dynamic>? customHeader,
+    List<MapEntry<String, File>>? files,
   }) async {
     Response<dynamic> response;
     try {
+      dynamic data;
+      if (files != null && files.isNotEmpty) {
+        FormData formData = FormData();
+        body.forEach((key, value) {
+          formData.fields.add(MapEntry(key, value.toString()));
+        });
+
+        for (var fileEntry in files) {
+          String fileName = fileEntry.value.path.split('/').last;
+          formData.files.add(
+            MapEntry(
+              fileEntry.key,
+              await MultipartFile.fromFile(fileEntry.value.path,
+                  filename: fileName),
+            ),
+          );
+        }
+        data = formData;
+      } else {
+        data = body;
+      }
+
       response = await _dio.post(
         url,
-        data: body,
+        data: data,
         options: Options(
-          sendTimeout: const Duration(milliseconds: 12000), //_defaultTimeout,
-          receiveTimeout:
-              const Duration(milliseconds: 12000), //_defaultTimeout,
+          sendTimeout: const Duration(milliseconds: 12000),
+          receiveTimeout: const Duration(milliseconds: 12000),
           headers: customHeader ?? header,
         ),
       );
@@ -91,8 +114,7 @@ class NetworkApi {
 
   dynamic returnResponse(Response<dynamic> response) {
     if (kDebugMode) {
-      log("Status Code: ${response.statusCode}, Response: ${response.data["data"]},"
-          "Reason: ${response.data["message"]}");
+      log("Status Code: ${response.statusCode}, Response: ${response.data}");
     }
     switch (response.statusCode) {
       case 200:

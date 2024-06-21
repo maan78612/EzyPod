@@ -75,7 +75,8 @@ class LoginScreen extends ConsumerWidget {
                 21.verticalSpace,
                 CustomButton(
                   title: 'Login',
-                  isEnable: loginViewModel.isBtnEnable,
+                  // isEnable: loginViewModel.isBtnEnable,
+                  isEnable: true,
                   bgColor: AppColors.primaryColor,
                   onPressed: () {
                     loginViewModel.login();

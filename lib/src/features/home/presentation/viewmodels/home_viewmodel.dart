@@ -1,14 +1,14 @@
+import 'package:ezy_pod/src/features/deliveries/domain/models/address_model.dart';
+import 'package:ezy_pod/src/features/home/domain/models/deliveries.dart';
 import 'package:ezy_pod/src/features/home/data/repositories/home_repository_impl.dart';
 import 'package:ezy_pod/src/features/home/domain/repositories/home_repository.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeViewModel with ChangeNotifier {
-  final Ref _ref;
   final HomeRepository _homeRepository = HomeRepositoryImpl();
 
-  HomeViewModel(this._ref);
-
+  DeliveriesModel? deliveryData;
+  List<AddressResult> addressList = [];
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
@@ -18,17 +18,32 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchDeliveryData() async {
-    setLoading = true;
+  Future<void> onInit() async {
     try {
-      final data = await _homeRepository.fetchDeliveries();
+      setLoading = true;
+      await fetchDeliveryData();
+      await fetchAddressData();
     } catch (e) {
-      // Handle login error
-      if (kDebugMode) {
-        print('Login error: $e');
-      }
+      debugPrint('fetchDeliveryData error: $e');
     } finally {
       setLoading = false;
+    }
+    notifyListeners();
+  }
+
+  Future<void> fetchDeliveryData() async {
+    try {
+      deliveryData = await _homeRepository.fetchDeliveries();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> fetchAddressData() async {
+    try {
+      addressList = await _homeRepository.fetchAddress();
+    } catch (e) {
+      rethrow;
     }
   }
 }

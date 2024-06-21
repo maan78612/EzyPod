@@ -1,13 +1,14 @@
 import 'package:ezy_pod/src/features/deliveries/data/repositories/delivery_repository_impl.dart';
+import 'package:ezy_pod/src/features/deliveries/domain/models/address_model.dart';
 import 'package:ezy_pod/src/features/deliveries/domain/repositories/delivery_repository.dart';
+import 'package:ezy_pod/src/features/home/domain/models/deliveries.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DeliveryViewModel with ChangeNotifier {
-  final Ref _ref;
   final DeliveryRepository _deliveryRepository = DeliveryRepositoryImpl();
 
-  DeliveryViewModel(this._ref);
+  List<DeliveriesResult> deliveriesList = [];
+  List<AddressResult> addresses = [];
 
   bool _isLoading = false;
 
@@ -19,6 +20,13 @@ class DeliveryViewModel with ChangeNotifier {
   }
 
   int currentIndex = 0;
+
+  void init(
+      {required List<DeliveriesResult> deliveriesList,
+      required List<AddressResult> addresses}) {
+    this.deliveriesList = deliveriesList;
+    this.addresses = addresses;
+  }
 
   void onNextClicked(int listLength) {
     if (currentIndex + 7 < listLength) {
@@ -44,6 +52,4 @@ class DeliveryViewModel with ChangeNotifier {
   TextEditingController notes = TextEditingController(
       text:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ");
-
-
 }

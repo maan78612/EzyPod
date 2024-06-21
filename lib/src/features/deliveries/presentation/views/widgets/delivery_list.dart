@@ -5,21 +5,19 @@ import 'package:ezy_pod/src/core/constants/fonts.dart';
 import 'package:ezy_pod/src/core/enums/delivery_status.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/viewmodels/delivery_viewmodel.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/pending_detail.dart';
+import 'package:ezy_pod/src/features/home/domain/models/deliveries.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DeliveryList extends ConsumerWidget {
-  final DeliveryStatus deliveryStatus;
+  final List<DeliveriesResult> deliveriesList;
   final ChangeNotifierProvider<DeliveryViewModel> deliveryViewModelProvider;
-  final int listLength;
 
-  const DeliveryList({
-    super.key,
-    required this.deliveryViewModelProvider,
-    required this.deliveryStatus,
-    required this.listLength,
-  });
+  const DeliveryList(
+      {super.key,
+      required this.deliveryViewModelProvider,
+      required this.deliveriesList});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,35 +37,39 @@ class DeliveryList extends ConsumerWidget {
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       children: List.generate(
-          deliveryViewModel.nextDataListLength(listLength),
-          (index) => CommonInkWell(
-                onTap: () {
-                  if (deliveryStatus == DeliveryStatus.pendingDeliveries) {
-                    CustomNavigation().push(PendingDetailScreen(
-                      deliveryViewModelProvider: deliveryViewModelProvider,
-                    ));
-                  }
-                },
-                child: Column(
+          deliveryViewModel.nextDataListLength(deliveriesList.length), (index) {
+        DeliveriesResult delivery = deliveriesList[index];
+        return CommonInkWell(
+          onTap: () {
+            if (delivery.status == DeliveryStatus.pending) {
+              CustomNavigation().push(PendingDetailScreen(
+                deliveryViewModelProvider: deliveryViewModelProvider,
+                delivery: delivery,
+                address: deliveryViewModel.addresses
+                    .firstWhere((address) => address.id == delivery.addressId),
+              ));
+            }
+          },
+          child: Column(
+            children: [
+              Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 24.sp, vertical: 22.sp),
+                child: Row(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 24.sp, vertical: 22.sp),
-                      child: Row(
-                        children: [
-                          customTextWidget(
-                              "${deliveryViewModel.currentIndex + index + 1}",
-                              1),
-                          customTextWidget("ABC Limited", 3),
-                          customTextWidget("BB5 5BY", 3,
-                              textAlignment: TextAlign.center),
-                        ],
-                      ),
-                    ),
-                    const Divider(color: AppColors.borderColor, height: 1),
+                    customTextWidget(
+                        "${deliveryViewModel.currentIndex + index + 1}", 1),
+                    customTextWidget(delivery.receiverName, 3),
+                    customTextWidget("BB5 5BY", 3,
+                        textAlignment: TextAlign.center),
                   ],
                 ),
-              )),
+              ),
+              const Divider(color: AppColors.borderColor, height: 1),
+            ],
+          ),
+        );
+      }),
     );
   }
 

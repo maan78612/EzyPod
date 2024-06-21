@@ -3,10 +3,12 @@ import 'package:ezy_pod/src/core/commons/custom_navigation.dart';
 import 'package:ezy_pod/src/core/constants/colors.dart';
 import 'package:ezy_pod/src/core/constants/fonts.dart';
 import 'package:ezy_pod/src/core/constants/images.dart';
+import 'package:ezy_pod/src/features/deliveries/domain/models/address_model.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/viewmodels/delivery_viewmodel.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/delivery_form/delivered_form.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/delivery_form/undelivered_form.dart';
 import 'package:ezy_pod/src/features/deliveries/presentation/views/widgets/delivery_app_bar.dart';
+import 'package:ezy_pod/src/features/home/domain/models/deliveries.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,16 +16,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class PendingDetailScreen extends ConsumerWidget {
   final ChangeNotifierProvider<DeliveryViewModel> deliveryViewModelProvider;
+  final DeliveriesResult delivery;
+  final AddressResult address;
 
   const PendingDetailScreen(
-      {super.key, required this.deliveryViewModelProvider});
+      {super.key,
+      required this.deliveryViewModelProvider,
+        required this.address,
+      required this.delivery});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryViewModel = ref.watch(deliveryViewModelProvider);
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-      appBar: CustomAppBar.deliveryAppBar(title: "Delivery 000004531"),
+      appBar: CustomAppBar.deliveryAppBar(title: "Delivery ${delivery.id}"),
       body: Padding(
         padding: EdgeInsets.all(16.sp),
         child: ListView(
@@ -31,13 +38,13 @@ class PendingDetailScreen extends ConsumerWidget {
             infoTile1(title: 'Name', value: 'MR Jones', img: AppImages.user),
             infoTile1(
                 title: 'Address1',
-                value: '1 line street',
+                value: address.address1,
                 img: AppImages.location),
             infoTile1(
                 title: 'Address2',
-                value: '2nd line street',
+                value: address.address2,
                 img: AppImages.location),
-            infoTile1(title: 'City', value: 'Town, city', img: AppImages.city),
+            infoTile1(title: 'City', value: address.city, img: AppImages.city),
             infoTile1(title: 'Vehicle', value: 'BB4 6HG', img: AppImages.truck),
             24.verticalSpace,
             Row(
